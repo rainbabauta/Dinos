@@ -19,6 +19,8 @@ var Game = {
         // enable physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
+        game.input.mouse.capture = true
+
         // By setting up global variables in the create function, we initialise them on game start.
         // We need them to be globally available so that the update function can alter them.
 
@@ -26,8 +28,10 @@ var Game = {
         // apple = {};                     // An object for the apple;
         // squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         // score = 0;                      // Game score.
-        speed = .5;                      // Game speed.
-        updateDelay = 0;                // A variable for control over update rates.
+        dinospeedx = 10;
+        dinospeedy = 10;                    // Game speed.
+        updateDelay = 0;
+        speed = 0                // A variable for control over update rates.
         // direction = 'right';            // The direction of our snake.
         // new_direction = null;           // A buffer to store the new direction into.
         // addNew = false;                 // A variable used when an apple has been eaten.
@@ -42,14 +46,21 @@ var Game = {
       
 
         Earth = game.add.sprite(241, 237, 'Earth');
-        dinosprites = game.add.sprite(400, 400, 'dinosprites 1');
+        //dinosprites = game.add.sprite(400, 400, 'dinosprites 1');
+
+        dino = game.add.group();
+        dino.enableBody = true;
 
         asteroid = game.add.group();
         asteroid.enableBody = true;
 
-        var incommingAsteroid = asteroid.create(0,0, 'Asteroid')
+        var incommingAsteroid = asteroid.create(0,0, 'Asteroid');
         incommingAsteroid.body.velocity.x = 100;
         incommingAsteroid.body.velocity.y = 100;
+
+       
+
+
 
         
 
@@ -79,7 +90,10 @@ var Game = {
 
 
 
+
     update: function() {
+
+        game.input.mouse.capture = true
 
 
         // Handle arrow key presses, while not allowing illegal direction changes that will kill the player.
@@ -114,10 +128,21 @@ var Game = {
         // Increase a counter on every update call.
         updateDelay++;
 
+        if (Game.input.activePointer.isDown) {
+            game.add.text(16,16,'test',{ fontSize: '32px', fill: '#FFFFFF' });
+            var dinoProjectile = dino.create(400, 400, 'dinosprites 1');
+            dinoProjectile.inputEnabled = true;
+            dinoProjectile.body.velocity.x = -1 * Game.input.activePointer.x / dinospeedx;
+            dinoProjectile.body.velocity.y = -1 * Game.input.activePointer.y / dinospeedy;
+        }
+
         // // Do game stuff only if the counter is aliquot to (10 - the game speed).
         // // The higher the speed, the more frequently this is fulfilled,
         // // making the snake move faster.
         if (updateDelay % (speed) == 0) {
+
+         
+
 
 
             // if (asteroidX < 368 && asteroidY < 368){
@@ -197,3 +222,12 @@ var Game = {
     }
 
 };
+
+/* Notes:
+
+At the moment the Dino has a trail that probably has to do with the update
+speed and adding the update delay to the if statement doesn't work. Also find
+out a way to have the Dino move the same way the mouse is in relation to the
+Earth and not the top left at (0,0)
+
+*/
