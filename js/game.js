@@ -28,10 +28,12 @@ var Game = {
         // apple = {};                     // An object for the apple;
         // squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         // score = 0;                      // Game score.
-        dinospeedx = 10;
-        dinospeedy = 10;                    // Game speed.
+        dinospeed = 200;
+                       // Game speed.
         updateDelay = 0;
-        speed = 0                // A variable for control over update rates.
+        speed = 0
+        
+        // A variable for control over update rates.
         // direction = 'right';            // The direction of our snake.
         // new_direction = null;           // A buffer to store the new direction into.
         // addNew = false;                 // A variable used when an apple has been eaten.
@@ -129,11 +131,10 @@ var Game = {
         updateDelay++;
 
         if (Game.input.activePointer.isDown) {
-            game.add.text(16,16,'test',{ fontSize: '32px', fill: '#FFFFFF' });
+            game.add.text(16,16,game.world.centerX,{ fontSize: '32px', fill: '#FFFFFF' });
             var dinoProjectile = dino.create(400, 400, 'dinosprites 1');
             dinoProjectile.inputEnabled = true;
-            dinoProjectile.body.velocity.x = -1 * Game.input.activePointer.x / dinospeedx;
-            dinoProjectile.body.velocity.y = -1 * Game.input.activePointer.y / dinospeedy;
+            game.physics.arcade.moveToPointer(dinoProjectile, dinospeed, game.input.activePointer);
         }
 
         // // Do game stuff only if the counter is aliquot to (10 - the game speed).
@@ -225,8 +226,8 @@ var Game = {
 
 /* Notes:
 
-At the moment the Dino has a trail that probably has to do with the update
-speed and adding the update delay to the if statement doesn't work. Also find
+At the moment the Dino has a trail that probably has to do with the click
+length so make a delay in between time you can fire. Also find
 out a way to have the Dino move the same way the mouse is in relation to the
 Earth and not the top left at (0,0)
 
