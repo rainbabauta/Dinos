@@ -29,9 +29,9 @@ var Game = {
         // squareSize = 15;                // The length of a side of the squares. Our image is 15x15 pixels.
         // score = 0;                      // Game score.
         dinospeed = 200;
-                       // Game speed.
         updateDelay = 0;
-        speed = 0
+        speed = 50
+        shottimer = 0
         
         // A variable for control over update rates.
         // direction = 'right';            // The direction of our snake.
@@ -130,17 +130,21 @@ var Game = {
         // Increase a counter on every update call.
         updateDelay++;
 
-        if (Game.input.activePointer.isDown) {
-            game.add.text(16,16,game.world.centerX,{ fontSize: '32px', fill: '#FFFFFF' });
+        if (Game.input.activePointer.isDown && shottimer == 0) {
+            shottimer = 3;
             var dinoProjectile = dino.create(400, 400, 'dinosprites 1');
             dinoProjectile.inputEnabled = true;
             game.physics.arcade.moveToPointer(dinoProjectile, dinospeed, game.input.activePointer);
         }
 
+
         // // Do game stuff only if the counter is aliquot to (10 - the game speed).
         // // The higher the speed, the more frequently this is fulfilled,
         // // making the snake move faster.
-        if (updateDelay % (speed) == 0) {
+        if (updateDelay % (speed) == 0 && shottimer > 0) {
+            shottimer --;
+            game.debug.text('Shot timer = ' + shottimer,16,16,'#FFFFFF');
+
 
          
 
