@@ -47,7 +47,7 @@ var Game = {
 
       
 
-        Earth = game.add.sprite(241, 237, 'Earth');
+        Earth = game.add.sprite(game.world.centerX - (318/2), game.world.centerY - (325/2), 'Earth');
         //dinosprites = game.add.sprite(400, 400, 'dinosprites 1');
 
         dino = game.add.group();
@@ -132,7 +132,7 @@ var Game = {
 
         if (Game.input.activePointer.isDown && shottimer == 0) {
             shottimer = 3;
-            var dinoProjectile = dino.create(400, 400, 'dinosprites 1');
+            var dinoProjectile = dino.create(game.world.centerX - (33/2), game.world.centerY - (38/2), 'dinosprites 1');
             dinoProjectile.inputEnabled = true;
             game.physics.arcade.moveToPointer(dinoProjectile, dinospeed, game.input.activePointer);
         }
