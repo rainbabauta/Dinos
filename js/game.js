@@ -1,7 +1,7 @@
-var snake, apple, squareSize, score, speed,
+var score, speed,
     updateDelay, direction, new_direction,
     addNew, cursors, scoreTextValue, speedTextValue, 
-    textStyle_Key, textStyle_Value, asteroidX, asteroidY;
+    textStyle_Key, textStyle_Value;
 
 var Game = {
 
